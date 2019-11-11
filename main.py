@@ -5,6 +5,9 @@ class SimonSays():
     def __repr__(self):
         pass
 
+    def __mapColours(self):
+        pass
+        
     # Dict mapping the colours to their output
     map = {}
     def solve(self):
@@ -14,16 +17,17 @@ class SimonSays():
 class Bomb():
     def __init__(self):
         strikes = 0
-        parallel = __setParallel()
+        parallel = setParallel()
 
-    def __setParallel(self):
+    # Ask the user whether the bomb has a parallel port
+    def setParallel(self):
         def __getUserIn(): # Get the user input and convert it to upper case
             userIn = input("Does the bomb have a parallel port? Y/N") # Get the user input
             userIn = userIn.upper()
             return userIn
         
         userIn = __getUserIn()
-        while(len(userIn) < 1 && (userIn[0] != "Y" || userIn[0] != "N")):
+        while((len(userIn) < 1) and (userIn[0] != "Y" or userIn[0] != "N")):
             print("Please enter Y/N")
             userIn = __getUserIn()
         
@@ -32,4 +36,4 @@ class Bomb():
         else:
             return False    
 
-        
+b = Bomb()
