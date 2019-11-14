@@ -1,6 +1,3 @@
-class Error(Exception):
-    pass
-
-class DictSwapException(Error):
+class DictSwapException(Exception):
     def __init__(self, message):
         super().__init__(message)

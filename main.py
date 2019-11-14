@@ -1,4 +1,4 @@
-from .models import SimonSays, Bomb
+from .models import SimonSays, Bomb, Passwords
 
 # Main loop
 b = Bomb()

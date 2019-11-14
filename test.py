@@ -1,8 +1,10 @@
-class A():
-    def __init__(self): 
-        print(self.cheesecake())
-    
-    def cheesecake(self):
-        return "Hello World"
+def createArray():
+    ui = input("Add To Array: \n")
+    array = []
 
-a = A()
+    while(ui != "e"):
+        ui = input("Add To Array: \n")
+        array.append(ui)
+    print(array)
+
+createArray()
