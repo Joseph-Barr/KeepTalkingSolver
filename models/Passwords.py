@@ -1,4 +1,4 @@
-from General import getLetterIn
+from General import getLetterArrayIn
 
 class Password():
     def __init__(self):
@@ -19,13 +19,15 @@ class Password():
     def solve(self):
         currIndex = 0
         while(len(self.state) > 1 and currIndex < 6): # Loop until there are no more viable passwords left in the state list
-            letter = getLetterIn()
+            letters = getLetterArrayIn()
             tempSearch = []
             for password in self.state:
-                if (password[currIndex] == letter):
-                    tempSearch.append(password)
+                for letter in letters:
+                    if (password[currIndex] == letter):
+                        tempSearch.append(password)
             currIndex += 1
             self.state = tempSearch
+            print("There are {} possible passwords".format(len(self.state)))
         print(self.state)
         return self.state
 
