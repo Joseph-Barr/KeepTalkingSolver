@@ -3,6 +3,7 @@ class Bomb():
         self.strikes = 0
         self.parallel = self.setParallel()
         self.serialVowel = False
+        self.lastSerialDigit = 0
 
     # Ask the user whether the bomb has a parallel port
     def setParallel(self):

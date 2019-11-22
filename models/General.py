@@ -2,7 +2,7 @@ import re as Regex
 
 # Similar to the function asking for Y/N, so could be combined later
 # TODO: add more sanitisation for only letters (REGEX?)
-def getLetterArrayIn(strLength = 0, validLetters):
+def getLetterArrayIn(strLength = 0, validLetters = "abcdefghijklmnopwxyz"):
     userIn = input("Please enter all letters:\n")
     userIn = userIn.lower()
 
@@ -14,4 +14,4 @@ def getLetterArrayIn(strLength = 0, validLetters):
         userIn = userIn.lower()
         regexFind = Regex.search(validLettersRegex, userIn)
 
-    return output.lower()
+    return userIn.lower()
