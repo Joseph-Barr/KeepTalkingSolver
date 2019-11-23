@@ -78,3 +78,4 @@ class SimpleWires():
 
     def reset(self):
         self.wires = []
+        
