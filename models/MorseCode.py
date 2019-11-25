@@ -22,15 +22,42 @@ class Morse():
     def __init__(self, morseCode):
         # self.code contains the individual letters of the morse code
         self.code = morseCode.split()
+        self.frequency = 0.0
 
     def __repr__(self):
-        return self.code
+        output = ""
+        for char in self.code:
+            output += char
+        return output
 
     def __str__(self):
-        return self.code
+        output = ""
+        for char in self.code:
+            output += char
+        return output
 
+    # Returns a list of possible values for the given sequence of morse code characters
     def solve(self):
-        pass
+        string = ""
+        for morseChar in self.code:
+            string += convertMorseToChar(morseChar)
+
+        possibleValues = []
+
+        for word in self.wordToFreq:
+            # Detect if there are more found characters than not found, gives some basic error correction
+            charsInWord = 0
+            charsNotInWord = 0
+            for char in string:
+                if char not in word:
+                    charsNotInWord += 1
+                else:
+                    charsInWord += 1
+
+            if charsNotInWord < charsInWord:
+                possibleValues.append([word, self.wordToFreq[word]])
+        
+        return possibleValues
 
 # Returns a character for the given morse code
 def convertMorseToChar(morse):
@@ -74,3 +101,6 @@ def convertMorseToChar(morse):
     }
 
     return morseCharMap[morse]
+
+m = Morse(". - .-")
+m.solve()
