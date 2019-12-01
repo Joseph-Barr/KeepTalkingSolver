@@ -1,4 +1,4 @@
-from CustomExceptions import DictSwapException
+from models.CustomExceptions import DictSwapException
 
 class SimonSays():
     def __init__(self, inBomb):
@@ -13,6 +13,8 @@ class SimonSays():
     def mapColours(self):
         # Dict mapping the colours to their output
         self.map = {"Red" : "Red", "Blue" : "Blue", "Green" : "Green", "Yellow" : "Yellow"}
+        self.colourChars = {"R" : "Red", "B" : "Blue", "G" : "Green", "Y" : "Yellow", "E" : "Exit"}
+
 
         # Define the map for the colours
         if(self.bomb.serialVowel):
@@ -37,7 +39,7 @@ class SimonSays():
                 self.map = swapDict(self.map, "Red", "Yellow")
                 self.map = swapDict(self.map, "Blue", "Green")
 
-    def __promptColour(self):
+    def promptColour(self):
         # TODO: This function repeats itself, maybe add a function idk
         colour = input("Enter Colour as R/B/G/Y  /  E for exit: \n")
         colour = colour.upper()
@@ -45,17 +47,14 @@ class SimonSays():
             print("Please enter in the correct format")
             colour = input("Enter Colour as R/B/G/Y: \n")
             colour = colour.upper()
-        colours = {"R" : "Red", "B" : "Blue", "G" : "Green", "Y" : "Yellow", "E" : "Exit"}
-        return colours[colour]
+        return self.colourChars[colour]
 
-    def solve(self):
-        currColour = self.__promptColour()
-        while(currColour != 'Exit'):
-            print(self.map[currColour])
-            self.state.append(self.map[currColour])
-            currColour = self.__promptColour()
-        
+    def addState(self, colour):
+        self.state.append(self.map[colour])
         return self.state
+
+    def getAnswer(self, colour):
+        return self.map[colour]
 
 # Swap 2 values in a dict
 # Returns the original dictionary with the swapped values, or on failure returns the original dictionary

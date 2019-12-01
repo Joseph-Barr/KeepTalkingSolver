@@ -1,4 +1,4 @@
-from General import getLetterArrayIn
+from models.General import getLetterArrayIn
 
 class Password():
     def __init__(self):
@@ -8,7 +8,7 @@ class Password():
         self.state = self.passwords
 
     def __repr__(self):
-        return state
+        return self.state
     
     def __str__(self):
         output = "Current Possible Passwords: "
@@ -33,6 +33,3 @@ class Password():
 
     def reset(self):
         self.state = self.passwords
-
-p = Password()
-p.solve()

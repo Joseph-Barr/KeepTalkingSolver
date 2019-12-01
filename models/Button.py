@@ -23,7 +23,7 @@ class Button():
             return "Press and Release"
         elif(self.colour == 'y'):
             return "Timer has: {} in any position".format(self.ReleasingAHeldButton())
-        elif(self.colour = 'r' and self.text == "hold"):
+        elif(self.colour == 'r' and self.text == "hold"):
             return "Press and Release"
         else:
             return "Timer has: {} in any position".format(self.ReleasingAHeldButton())

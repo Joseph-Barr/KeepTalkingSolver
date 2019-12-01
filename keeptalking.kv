@@ -1,0 +1,21 @@
+#:kivy 1.0.9
+
+<StartScreen>:     
+    GridLayout:
+        cols: 2
+        rows: 2
+        size: root.width, root.height
+        row_default_height: 50
+        row_force_default: True
+        padding: 20
+        Label:
+            text: "Time: "
+
+        TextInput:
+            multiline: False
+        
+        Label:
+            text: 'Is There A Paralell Port: '
+        
+        TextInput:
+            multiline: False
