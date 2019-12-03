@@ -1,0 +1,4 @@
+{
+    "python.linting.enabled": true,
+    "python.pythonPath": "/home/joseph/Github/KeepTalkingSolver/kivy_venv/bin/python3.7"
+}
