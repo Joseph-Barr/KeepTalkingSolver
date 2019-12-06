@@ -15,11 +15,11 @@ class Button():
     def solve(self):
         if(self.colour == "b" and self.text == "abort"):
             return "Timer has: {} in any position".format(self.ReleasingAHeldButton())
-        elif(self.bomb.batteries.length > 1 and self.text == "detonate"):
+        elif(len(self.bomb.batteries) > 1 and self.text == "detonate"):
              return "Press and Release"
         elif(self.colour == "w" and ["CAR", 1] in self.bomb.indicators):
              return "Timer has: {} in any position".format(self.ReleasingAHeldButton())
-        elif(self.bomb.batteries.length > 2 and ["FRK", 1] in self.bomb.indicators):
+        elif(len(self.bomb.batteries) > 2 and ["FRK", 1] in self.bomb.indicators):
             return "Press and Release"
         elif(self.colour == 'y'):
             return "Timer has: {} in any position".format(self.ReleasingAHeldButton())
@@ -31,10 +31,9 @@ class Button():
     # Returns the number that can appear on the timer at any posistion to solve the bomb
     # for the specified colour
     def ReleasingAHeldButton(self):
-        colourTimerMap = {"Blue": 4, "White": 1, "Yellow": 5}
+        colourTimerMap = {"b": 4, "w": 1, "y": 5}
 
         if (self.colour in colourTimerMap):
             return colourTimerMap[self.colour]
         else:
             return 1
-

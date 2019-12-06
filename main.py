@@ -1,6 +1,7 @@
 # Import GUI elements
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.core.window import Window
+from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
@@ -11,15 +12,11 @@ from kivy.uix.textinput import TextInput
 from kivy.config import Config
 
 from models import Bomb
+from screens.ButtonScreen import ButtonScreen
 import re as Regex
 
 # Create a bomb for the game to use
 gameBomb = Bomb.Bomb()
-
-class WindowManager(ScreenManager):
-    def __init__(self, **args):
-        super(WindowManager, self).__init__(**args)
-        self.add_widget(BombScreen(name = 'bombScreen'))
 
 # Checks if the text in the text input is a number or not.
 # Performs as normal if not, otherwise empties the instance
@@ -41,10 +38,8 @@ class BombScreen(Screen):
     # Initialise the BombScreen to use the parent BoxLayout properties
     def __init__(self, **args):
         super(BombScreen, self).__init__(**args)
-        #self.orientation = 'horizontal'
-        #self.size = self.width, self.height
 
-        ScreenLayout = GridLayout(cols = 3, rows = 1, size = (self.width, self.height))
+        ScreenLayout = BoxLayout(size = (self.width, self.height), orientation = 'horizontal')
 
         # Create the bomb view page, containing all the widgets that will be used to read values for the bomb
         bombValueWidgets = GridLayout()
@@ -125,18 +120,6 @@ class BombScreen(Screen):
 
         ScreenLayout.add_widget(bombValueWidgets)
 
-        navBar = BoxLayout(
-            size_hint = (0.3, 1),
-            orientation = 'vertical'
-        )
-        widgetList = ['bomb', 'button', 'memory', 'morse code', 'passwords', 'simon says', 'simple wires', 'whos on first']
-        for widget in widgetList:
-            navBar.add_widget(Button(
-                text = widget.capitalize(),
-                id = widget
-            ))
-        ScreenLayout.add_widget(navBar)
-
         # Send the layout of the screen to this class instance
         self.add_widget(ScreenLayout)
     
@@ -166,7 +149,7 @@ class BombScreen(Screen):
     def setIndicatorsInput(self, instance, value):
         possibleIndicators = ['SND', 'CLR', 'CAR', 'IND', 'FRQ', 'SIG', 'NSA', 'MSA', 'TRN', 'BOB', 'FRK']
         if not value:
-            indicators = instance.text
+            indicators = instance.text.upper()
             indicators = indicators.split(', ')
 
             try:
@@ -190,27 +173,60 @@ def onFocusSetAttr(instance, value):
         pass
     else:
         setattr(gameBomb, instance.id, instance.text)
-        print(instance.text)
+        print(instance.id, ' : ',  instance.text)
 
-        
-class navSideBar(GridLayout):
-    def __init__(self, **args):
-        super(navSideBar, self).__init__(**args)
-        self.cols = 1
-        self.rows = 6
-        btn = Button(
-            size_hint = (0.3, 1),
-            text = str(self.width)
-        )
-        self.add_widget(btn)
+def goToGameScreen(instance):
+        try:
+            ModuleScreenController.current = instance.id
+        except Exception:
+            print('Error loading screen {}'.format(instance.id))
+
+# Setting the game screen
+# This screen is the main screen for the game and contains the navbar
+# and the changing module screens
+GameScreen = Screen(name = 'GameScreen')
+
+GameScreenLayout = BoxLayout(orientation = 'horizontal')
+
+ModuleScreenController = ScreenManager(transition = NoTransition())
+ModuleScreenController.size_hint = (0.7, 1)
+
+# Creating all the game screens
+ModuleScreenController.add_widget(BombScreen(name = 'bomb'))
+ButtonModuleScreen = ButtonScreen(name = 'button')
+ButtonModuleScreen.setBomb(gameBomb)
+ModuleScreenController.add_widget(ButtonModuleScreen)
+
+# Prepare the navbar
+# Container for the nav bar buttons
+navBar = BoxLayout(
+    size_hint = (0.3, 1),
+    orientation = 'vertical'
+)
+# Create a list of buttons and their names for the navbar
+widgetList = ['bomb', 'button', 'memory', 'morse code', 'passwords', 'simon says', 'simple wires', 'whos on first']
+for widget in widgetList:
+    moduleButton = Button(
+                        text = widget.capitalize(),
+                        id = widget
+                        )
+    moduleButton.bind(on_release = goToGameScreen)
+    navBar.add_widget(moduleButton)
+
+# Add the 2 halves of the screen to the main layout
+GameScreenLayout.add_widget(ModuleScreenController)
+GameScreenLayout.add_widget(navBar)
+# Add the layout to the displayed screen
+GameScreen.add_widget(GameScreenLayout)
+
+
 
 class KeepTalkingApp(App):
 
     def build(self):
-        Config.set('graphics', 'width', '1200')
-        Config.set('graphics', 'height', '800')
-        
-        return WindowManager()
+        Window.size = (1200, 600)
+
+        return GameScreen
 
 
 if __name__ == '__main__':
