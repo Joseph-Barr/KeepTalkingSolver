@@ -22,7 +22,7 @@ class SimonSays():
                 self.map = swapDict(self.map, "Red", "Blue")
                 self.map = swapDict(self.map, "Green", "Yellow")
             elif (self.bomb.strikes == 1):
-                self.map = swapDict(self.map, "Blursed", "Yellow")
+                self.map = swapDict(self.map, "Red", "Yellow")
                 self.map = swapDict(self.map, "Blue", "Green")
             else: # Super inefficient to read, but thats the nature of the game really
                 self.map["Red"] = "Green"
@@ -55,6 +55,9 @@ class SimonSays():
 
     def getAnswer(self, colour):
         return self.map[colour]
+    
+    def getMap(self):
+        return self.map
 
 # Swap 2 values in a dict
 # Returns the original dictionary with the swapped values, or on failure returns the original dictionary

@@ -13,6 +13,7 @@ from kivy.config import Config
 
 from models import Bomb
 from screens.ButtonScreen import ButtonScreen
+from screens.SimonSaysScreen import SimonSaysScreen
 import re as Regex
 
 # Create a bomb for the game to use
@@ -51,7 +52,6 @@ class BombScreen(Screen):
         strikesTxBx = SingleNumericTextInput(
             id = 'strikes',
             text = '0',
-            #on_focus = pass,
             font_size = 60,
             multiline = False
         )
@@ -74,12 +74,12 @@ class BombScreen(Screen):
 
         )
 
-        lastSerialLabel = Label(text = "What is the last digit of the serial number?: ", font_size = 20)
+        lastSerialLabel = Label(text = "What is the last digit of the serial number?: ", font_size = 20, halign = 'right')
         lastSerialTxBx = SingleNumericTextInput(
             id = 'lastSerialDigit',
             text = '0',
             multiline = False,
-            font_size = 60,
+            font_size = 60
         )
         lastSerialTxBx.bind(focus = onFocusSetAttr)
 
@@ -196,6 +196,10 @@ ModuleScreenController.add_widget(BombScreen(name = 'bomb'))
 ButtonModuleScreen = ButtonScreen(name = 'button')
 ButtonModuleScreen.setBomb(gameBomb)
 ModuleScreenController.add_widget(ButtonModuleScreen)
+
+SimonSaysModuleScreen = SimonSaysScreen(gameBomb, name = 'simon says')
+SimonSaysModuleScreen.setBomb(gameBomb)
+ModuleScreenController.add_widget(SimonSaysModuleScreen)
 
 # Prepare the navbar
 # Container for the nav bar buttons
