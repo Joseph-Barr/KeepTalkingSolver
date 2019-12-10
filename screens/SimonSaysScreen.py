@@ -6,14 +6,17 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.textinput import TextInput
+from kivy.graphics import Color, Rectangle
 
 from models.SimonSays import SimonSays
 
+from gameVars import gameBomb as gameBomb
+
 class SimonSaysScreen(Screen):
-    def __init__(self, bomb, **args):
+    def __init__(self, **args):
         super(SimonSaysScreen, self).__init__(**args)
 
-        self.bomb = bomb
+        self.bomb = gameBomb
 
         ScreenLayout = BoxLayout(orientation = 'vertical')
 
@@ -25,21 +28,26 @@ class SimonSaysScreen(Screen):
         self.colourMap = {"Red" : "Red", "Blue" : "Blue", "Green" : "Green", "Yellow" : "Yellow"}
 
         # Dict of output text labels
-        self.outputLabelDict = {"Red" : Label(), "Blue" : Label(), "Green" : Label(), "Yellow" : Label()}
+        self.outputLabelDict = {"Red" : ColouredLabel(), "Blue" : ColouredLabel(), "Green" : ColouredLabel(), "Yellow" : ColouredLabel()}
 
-        colourToRGB = {"Red" : ListProperty([1, 0, 0, 1]), "Blue" : ListProperty([0, 0, 1, 1]), "Green" : ListProperty([0, 1, 0, 1]), "Yellow" : ListProperty([1, 1, 0, 1])}
+        self.colourToRGB = {"Red" : [1, 0, 0, 0.5], "Blue" : [0, 0, 1, 0.5], "Green" : [0, 1, 0, 0.5], "Yellow" : [1, 1, 0, 0.5]}
 
         self.colourMap = self.module.getMap()
 
         for colour in self.colourMap:
-            colourInputLabel = Label(
+            colourInputLabel = ColouredLabel(
                 text = colour
             )
+            colourSplit = self.colourToRGB[colour]
+            colourInputLabel.setBackground(colourSplit[0], colourSplit[1], colourSplit[2], colourSplit[3])
             
             self.ColourGrid.add_widget(colourInputLabel)
             self.ColourGrid.add_widget(Label(text = 'Becomes -> '))
 
             self.outputLabelDict[colour].text = self.colourMap[colour]
+            # Reuse the variable from before to get the RGBA value for the label colour 
+            colourSplit = self.colourToRGB[self.colourMap[colour]]
+            self.outputLabelDict[colour].setBackground(colourSplit[0], colourSplit[1], colourSplit[2], colourSplit[3])
             
             self.ColourGrid.add_widget(self.outputLabelDict[colour])
 
@@ -55,6 +63,25 @@ class SimonSaysScreen(Screen):
         self.bomb = bomb
 
     def refreshLabels(self, instance):
-        self.module.getMap()
+        self.module = SimonSays(gameBomb)
+        self.module.mapColours()
+        self.colourMap = self.module.getMap()
         for outputLabel in self.outputLabelDict:
             self.outputLabelDict[outputLabel].text = self.colourMap[outputLabel]
+
+            colourSplit = self.colourToRGB[self.outputLabelDict[outputLabel].text]
+            self.outputLabelDict[outputLabel].setBackground(colourSplit[0], colourSplit[1], colourSplit[2], colourSplit[3])
+        print(gameBomb.strikes, gameBomb.serialVowel, self.colourMap)
+
+class ColouredLabel(Label):
+    def setBackground(self, r, g, b, a):
+        self.canvas.before.clear()
+        with self.canvas.before:
+            Color(r, g, b, a)
+            self.rect = Rectangle(pos = self.pos, size = self.size)
+        
+        self.bind(pos = self.updateRect, size = self.updateRect)
+    
+    def updateRect(self, *args):
+        self.rect.pos = self.pos
+        self.rect.size = self.size

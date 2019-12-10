@@ -6,3 +6,4 @@ class Bomb():
         self.lastSerialDigit = lastSerialDigit
         self.batteries = batteries
         self.indicators = indicators
+    

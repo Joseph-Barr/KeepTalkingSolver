@@ -9,9 +9,14 @@ from kivy.uix.textinput import TextInput
 
 from models.Button import Button as ButtonModule
 
+from gameVars import gameBomb as gameBomb
+
 class ButtonScreen(Screen):
     def __init__(self, **args):
         super(ButtonScreen, self).__init__(**args)
+
+        self.bomb = gameBomb
+        
         ScreenLayout = BoxLayout(orientation = 'vertical', padding = 20)
 
         LabelInGrid = GridLayout(cols = 2, rows = 2)
@@ -62,6 +67,5 @@ class ButtonScreen(Screen):
             self.resultsLbl.text = 'Unexpected error'
             
 
-    # Sets the bomb, must be called because the init function cant contain a bomb
     def setBomb(self, bomb):
         self.bomb = bomb

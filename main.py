@@ -11,13 +11,12 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.textinput import TextInput
 from kivy.config import Config
 
-from models import Bomb
+from models.Bomb import Bomb
+from gameVars import gameBomb as gameBomb
 from screens.ButtonScreen import ButtonScreen
 from screens.SimonSaysScreen import SimonSaysScreen
 import re as Regex
 
-# Create a bomb for the game to use
-gameBomb = Bomb.Bomb()
 
 # Checks if the text in the text input is a number or not.
 # Performs as normal if not, otherwise empties the instance
@@ -55,7 +54,7 @@ class BombScreen(Screen):
             font_size = 60,
             multiline = False
         )
-        strikesTxBx.bind(focus = onFocusSetAttr)
+        strikesTxBx.bind(focus = onFocusSetIntAttr)
 
         self.btnStateBinMap = {"normal" : False, "down" : True}
 
@@ -81,7 +80,7 @@ class BombScreen(Screen):
             multiline = False,
             font_size = 60
         )
-        lastSerialTxBx.bind(focus = onFocusSetAttr)
+        lastSerialTxBx.bind(focus = onFocusSetIntAttr)
 
 
         batteriesLabel = Label(text = 'Enter all batteries: ', font_size = 30)
@@ -168,11 +167,14 @@ class BombScreen(Screen):
                 instance.text = "Error in : '{}'".format(instance.text)
                 print("Error splitting indicator values, nothing set")        
 
-def onFocusSetAttr(instance, value):
+def onFocusSetIntAttr(instance, value):
     if value:
         pass
     else:
-        setattr(gameBomb, instance.id, instance.text)
+        try:
+            setattr(gameBomb, instance.id, int(instance.text))
+        except ValueError:
+            print('Error setting value {} to {}'.format( instance.id, instance.text ))
         print(instance.id, ' : ',  instance.text)
 
 def goToGameScreen(instance):
@@ -197,8 +199,7 @@ ButtonModuleScreen = ButtonScreen(name = 'button')
 ButtonModuleScreen.setBomb(gameBomb)
 ModuleScreenController.add_widget(ButtonModuleScreen)
 
-SimonSaysModuleScreen = SimonSaysScreen(gameBomb, name = 'simon says')
-SimonSaysModuleScreen.setBomb(gameBomb)
+SimonSaysModuleScreen = SimonSaysScreen(name = 'simon says')
 ModuleScreenController.add_widget(SimonSaysModuleScreen)
 
 # Prepare the navbar
