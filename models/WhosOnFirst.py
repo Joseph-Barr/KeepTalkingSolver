@@ -1,4 +1,4 @@
-from General import getLetterArrayIn
+from models.General import getLetterArrayIn
 
 class WhosOnFirst():
     # This maps words to their corresponding list of valid words
@@ -39,7 +39,7 @@ class WhosOnFirst():
         ["first", "okay", "c"],
         ["yes", "nothing", "led", "they are"],
         ["blank", "read", "red", "you", "your", "you're", "their"],
-        ["nothing", "reed", "leed"],
+        ["", "reed", "leed"],
         ["display", "says", "no", "lead", "hold on", "you are", "there", "see", "cee"]
     ]
 
@@ -53,10 +53,7 @@ class WhosOnFirst():
     ]
 
     def __init__(self):
-        # Probably need to change the function of this
-        self.setDispWord()
-        self.setFindWord()
-        print(self.solve())
+        pass
 
     def __repr__(self):
         pass
@@ -66,23 +63,23 @@ class WhosOnFirst():
 
     def setDispWord(self):
         print("What is the word on the display?: \n")
-        self.dspWord = getLetterArrayIn(0, """abcdefghijklmnopqrstuvwxyz\?\' """)
+        self.dspWord = getLetterArrayIn(0, r"""abcdefghijklmnopqrstuvwxyz\?\' """)
 
-    def setFindWord(self):
-        print("What is the word in the %s position: \n" % self.getPos()[1])
-        self.findWord = getLetterArrayIn(0, "abcdefghijklmnopqrstuvwxyz\?\' ")
+    def setFindWord(self, displayWord):
+        print("What is the word in the %s position: \n" % self.getPos(displayWord)[1])
+        self.findWord = getLetterArrayIn(0, r"abcdefghijklmnopqrstuvwxyz\?\' ")
     
     # Returns the position of the word to be used in the solve() method
-    def getPos(self):
+    def getPos(self, displayWord):
         for index, currWordList in enumerate(self.posMap):
-            if self.dspWord in currWordList:
+            if displayWord in currWordList:
                 return index, self.posToTextMap[index]
         # If the method hasnt found the word by now, return a failure message
-        return 0, "Couldn't Find Word: %s" % self.dspWord
+        return 0, "Couldn't Find Word: %s" % displayWord
 
     # Returns the list of words to press on the module
-    def solve(self):
-        return self.wordMap[self.findWord]
+    def solve(self, wordInPos):
+        return self.wordMap[wordInPos]
 
     def reset(self):
         pass

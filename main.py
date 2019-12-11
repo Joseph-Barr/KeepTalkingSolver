@@ -15,6 +15,7 @@ from models.Bomb import Bomb
 from gameVars import gameBomb as gameBomb
 from screens.ButtonScreen import ButtonScreen
 from screens.SimonSaysScreen import SimonSaysScreen
+from screens.WhosOnFirstScreen import WhosOnFirstScreen
 import re as Regex
 
 
@@ -201,6 +202,9 @@ ModuleScreenController.add_widget(ButtonModuleScreen)
 
 SimonSaysModuleScreen = SimonSaysScreen(name = 'simon says')
 ModuleScreenController.add_widget(SimonSaysModuleScreen)
+
+WhosOnFirstModuleScreen = WhosOnFirstScreen(name = 'whos on first')
+ModuleScreenController.add_widget(WhosOnFirstModuleScreen)
 
 # Prepare the navbar
 # Container for the nav bar buttons

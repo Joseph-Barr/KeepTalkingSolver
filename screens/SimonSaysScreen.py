@@ -1,5 +1,4 @@
 from kivy.uix.screenmanager import Screen
-from kivy.properties import ListProperty
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
@@ -71,7 +70,7 @@ class SimonSaysScreen(Screen):
 
             colourSplit = self.colourToRGB[self.outputLabelDict[outputLabel].text]
             self.outputLabelDict[outputLabel].setBackground(colourSplit[0], colourSplit[1], colourSplit[2], colourSplit[3])
-        print(gameBomb.strikes, gameBomb.serialVowel, self.colourMap)
+        print("Strikes: {}, serialVowel: {}, Colour Map: {}".format(gameBomb.strikes, gameBomb.serialVowel, self.colourMap))
 
 class ColouredLabel(Label):
     def setBackground(self, r, g, b, a):
