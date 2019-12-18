@@ -28,4 +28,6 @@ class Memory():
 
     # Set modules stage values pos and val
     def setStage(self, stage, pos, val):
+        if (pos > 4 or pos < 1) or (val > 4 or val < 1):
+            return
         self.state[stage - 1] = [pos, val]

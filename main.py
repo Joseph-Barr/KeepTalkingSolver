@@ -16,22 +16,10 @@ from gameVars import gameBomb as gameBomb
 from screens.ButtonScreen import ButtonScreen
 from screens.SimonSaysScreen import SimonSaysScreen
 from screens.WhosOnFirstScreen import WhosOnFirstScreen
+from screens.MemoryScreen import MemoryScreen
 import re as Regex
 
-
-# Checks if the text in the text input is a number or not.
-# Performs as normal if not, otherwise empties the instance
-class SingleNumericTextInput(TextInput):
-    def insert_text(self, substring, from_undo = False):
-        searchRgx = Regex.compile('([0-9])')
-        searchResult = searchRgx.fullmatch(substring)
-        
-        if (searchResult is not None):
-            output = substring
-        else:
-            output = ""
-
-        return super(SingleNumericTextInput, self).insert_text(output, from_undo = from_undo)
+from models.General import SingleNumericTextInput
 
 
 # Define the main screen that contains the bomb variables
@@ -205,6 +193,9 @@ ModuleScreenController.add_widget(SimonSaysModuleScreen)
 
 WhosOnFirstModuleScreen = WhosOnFirstScreen(name = 'whos on first')
 ModuleScreenController.add_widget(WhosOnFirstModuleScreen)
+
+MemoryModuleScreen = MemoryScreen(name = 'memory')
+ModuleScreenController.add_widget(MemoryModuleScreen)
 
 # Prepare the navbar
 # Container for the nav bar buttons
