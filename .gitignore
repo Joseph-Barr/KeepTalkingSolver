@@ -1,3 +1,8 @@
 kivy_venv/
 venv/
 .vscode/
+KeepTalkingSolver.sln
+KeepTalkingSolver.pyproj
+.vs/
+*.pyc
+__pycache__/

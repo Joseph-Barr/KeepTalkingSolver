@@ -18,10 +18,10 @@ class Memory():
         # Array containing the result in the form stages[stage][display]
         stages = [
             ["Position 2", "Position 2", "Position 3", "Position 4"],
-            ["Label 4", "Position {}".format(self.state[0][0]), "Position 1", "Position {}".format(self.state[0][0])],
-            ["Label {}".format(self.state[1][1]), "Label {}".format(self.state[0][1]), "Position 3", "Label 4"],
+            ["Labelled 4", "Position {}".format(self.state[0][0]), "Position 1", "Position {}".format(self.state[0][0])],
+            ["Labelled {}".format(self.state[1][1]), "Labelled {}".format(self.state[0][1]), "Position 3", "Labelled 4"],
             ["Position {}".format(self.state[0][0]), "Position 3", "Position {}".format(self.state[1][0]), "Position {}".format(self.state[1][0])],
-            ["Label {}".format(self.state[0][1]), "Label {}".format(self.state[1][1]), "Label {}".format(self.state[3][1]), "Label {}".format(self.state[2][1])]
+            ["Labelled {}".format(self.state[0][1]), "Labelled {}".format(self.state[1][1]), "Labelled {}".format(self.state[3][1]), "Labelled {}".format(self.state[2][1])]
         ]
         
         return stages[stage - 1][display - 1]

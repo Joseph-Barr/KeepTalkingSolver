@@ -67,35 +67,71 @@ class MemoryScreen(Screen):
         self.SubscreenManager.current = 'displayNumScreen'
         ScreenLayout.add_widget(self.SubscreenManager)
 
-        nextButton = Button(
+        self.nextButton = Button(
             text = 'Next',
             size_hint = (1, 0.5)
         )
-        nextButton.bind(on_release = self.nextStage)
+        self.nextButton.bind(on_release = self.nextStage)
 
-        ScreenLayout.add_widget(nextButton)
+        ScreenLayout.add_widget(self.nextButton)
 
         self.add_widget(ScreenLayout)
 
     def nextStage(self, instance):
         if self.currentStage > 5:
-            print('Module Completed')
-            # Do nothing if the module is completed
             return
         else:
             if self.SubscreenManager.current == 'displayNumScreen':
-                self.promptLabel.text = self.module.getStage(self.currentStage, int(self.displayNumTxIn.text))
-                self.SubscreenManager.current = 'posNumScreen'
+                try:
+                    dispIn = int(self.displayNumTxIn.text)
+                    if not checkWithinRange(1, 4, dispIn):
+                        print('Value Too High')
+                        return
+                    self.promptLabel.text = self.module.getStage(self.currentStage, dispIn)
+                    self.SubscreenManager.current = 'posNumScreen'
+                    # Set the text for the button to reset when it appears on the next module
+                    if self.currentStage == 5:
+                        self.nextButton.text = 'Reset'
+
+                except ValueError:
+                    print('Error Converting number to Int')
+                    return
+                # TODO ADD QOL changes to make the text box contain the variable that the player does not have to find because it is known
             else:
                 try:
-                    self.module.setStage(self.currentStage, int(self.inputPosition.text), int(self.inputNumber.text))
+                    posIn = int(self.inputPosition.text)
+                    numIn = int(self.inputNumber.text)
+                    
+                    if not checkWithinRange(1, 4, posIn) or not checkWithinRange(1, 4, numIn):
+                        print('Value Too High')
+                        return
+
+                    if self.currentStage != 5:
+                        self.module.setStage(self.currentStage, posIn, numIn)
+                    self.currentStage += 1
+                    self.promptLabel.text = 'What is the number on the display'
+                    self.SubscreenManager.current = 'displayNumScreen'
                 except ValueError:
                     print('Error converting Pos or Value to Int')
                     return
-                self.promptLabel.text = 'What is the number on the display'
-                self.SubscreenManager.current = 'displayNumScreen'
 
+        if self.currentStage > 5:
+            # IF the module is complete make the next button a reset button
+            print('Module Completed')
+            print('Resetting Module')
+            self.module = Memory()
+            self.currentStage = 1
+            self.nextButton.text = 'Next'
 
-            self.currentStage += 1
+        print(self.module.state, self.currentStage)
+
+def checkWithinRange(lower, upper, num):
+    if num < lower or num > upper:
+        return False
+    else: 
+        return True
+
+            
+            
 
 
