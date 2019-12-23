@@ -17,6 +17,7 @@ from screens.ButtonScreen import ButtonScreen
 from screens.SimonSaysScreen import SimonSaysScreen
 from screens.WhosOnFirstScreen import WhosOnFirstScreen
 from screens.MemoryScreen import MemoryScreen
+from screens.MorseCodeScreen import MorseCodeScreen
 import re as Regex
 
 from models.General import SingleNumericTextInput
@@ -196,6 +197,9 @@ ModuleScreenController.add_widget(WhosOnFirstModuleScreen)
 
 MemoryModuleScreen = MemoryScreen(name = 'memory')
 ModuleScreenController.add_widget(MemoryModuleScreen)
+
+MorseCodeModuleScreen = MorseCodeScreen(name = 'morse code')
+ModuleScreenController.add_widget(MorseCodeModuleScreen)
 
 # Prepare the navbar
 # Container for the nav bar buttons

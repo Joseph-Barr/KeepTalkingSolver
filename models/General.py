@@ -32,3 +32,15 @@ class SingleNumericTextInput(TextInput):
             output = ""
 
         return super(SingleNumericTextInput, self).insert_text(output, from_undo = from_undo)
+
+class MorseTextInput(TextInput):
+    def insert_text(self, substring, from_undo = False):
+        searchRgx = Regex.compile(r'([\-\. ]+)')
+        searchResult = searchRgx.fullmatch(substring)
+        
+        if (searchResult is not None):
+            output = substring
+        else:
+            output = ""
+
+        return super(MorseTextInput, self).insert_text(output, from_undo = from_undo)

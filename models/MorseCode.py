@@ -101,6 +101,3 @@ def convertMorseToChar(morse):
     }
 
     return morseCharMap[morse]
-
-m = Morse(". - .-")
-m.solve()
