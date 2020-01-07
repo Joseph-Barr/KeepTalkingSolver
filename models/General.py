@@ -18,7 +18,6 @@ def getLetterArrayIn(strLength = 0, validLetters = "abcdefghijklmnopqrstuvwxyz")
 
 
 from kivy.uix.textinput import TextInput
-
 # Checks if the text in the text input is a number or not.
 # Performs as normal if not, otherwise empties the instance
 class SingleNumericTextInput(TextInput):

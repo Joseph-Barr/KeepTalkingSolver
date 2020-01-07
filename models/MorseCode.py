@@ -40,7 +40,11 @@ class Morse():
     def solve(self):
         string = ""
         for morseChar in self.code:
-            string += convertMorseToChar(morseChar)
+            if (convertMorseToChar(morseChar)[0] != -1):
+                string += convertMorseToChar(morseChar)
+            else:
+                print("Solve failed, invalid char {}".format(morseChar))
+                return (-1, "Solve failed")
 
         possibleValues = []
 
@@ -99,5 +103,8 @@ def convertMorseToChar(morse):
         "---..": '8',
         "----.": '9'
     }
-
-    return morseCharMap[morse]
+    try:
+        return morseCharMap[morse]
+    except KeyError:
+        print("Invalid Morse Code Character")
+        return (-1, "ConversionError")

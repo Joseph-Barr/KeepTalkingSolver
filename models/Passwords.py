@@ -1,4 +1,18 @@
-from models.General import getLetterArrayIn
+#from General import getLetterArrayIn
+import re as Regex
+def getLetterArrayIn(strLength = 0, validLetters = "abcdefghijklmnopqrstuvwxyz"):
+    userIn = input("Please enter all letters:\n")
+    userIn = userIn.lower()
+
+    validLettersRegex = "[^%s]" % validLetters
+    regexFind = Regex.search(validLettersRegex, userIn)
+
+    while(bool(regexFind)):
+        userIn = input("Please enter all letters:\n")
+        userIn = userIn.lower()
+        regexFind = Regex.search(validLettersRegex, userIn)
+
+    return userIn.lower()
 
 class Password():
     def __init__(self):
@@ -33,3 +47,6 @@ class Password():
 
     def reset(self):
         self.state = self.passwords
+
+a = Password()
+a.solve()
