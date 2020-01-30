@@ -30,10 +30,9 @@ class Password():
             output += "{}, ".format(password)
         return output[:-2]
 
-    def solve(self):
+    def solve(self, letterList):
         currIndex = 0
-        while(len(self.state) > 1 and currIndex < 6): # Loop until there are no more viable passwords left in the state list
-            letters = getLetterArrayIn()
+        for letters in letterList:
             tempSearch = []
             for password in self.state:
                 for letter in letters:
@@ -41,12 +40,6 @@ class Password():
                         tempSearch.append(password)
             currIndex += 1
             self.state = tempSearch
-            print("There are {} possible passwords".format(len(self.state)))
+        print("There are {} possible passwords".format(len(self.state)))
         print(self.state)
         return self.state
-
-    def reset(self):
-        self.state = self.passwords
-
-a = Password()
-a.solve()
