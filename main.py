@@ -19,6 +19,7 @@ from screens.WhosOnFirstScreen import WhosOnFirstScreen
 from screens.MemoryScreen import MemoryScreen
 from screens.MorseCodeScreen import MorseCodeScreen
 from screens.PasswordScreen import PasswordScreen
+from screens.SimpleWiresScreen import SimpleWiresScreen
 import re as Regex
 
 from models.General import SingleNumericTextInput
@@ -77,7 +78,7 @@ class BombScreen(Screen):
         batteriesLabel = Label(text = 'Enter all batteries: ', font_size = 30)
         batteriesTxBx =  TextInput(
             id = 'batteries',
-            text = "AA D", 
+            text = "Enter batteries here", 
             multiline = False,
             font_size = 40
         )
@@ -87,7 +88,7 @@ class BombScreen(Screen):
         indicatorsLabel = Label(text = 'Indicators', font_size = 30)
         indicatorsTxBx = TextInput(
             id = 'indicators',
-            text = 'FRK 1',
+            text = 'Indicators in the form: NAME(ALL CAPS, 3 LETTERS) STATUS(1/0),',
             multiline = False,
             font_size = 30
         )
@@ -204,6 +205,9 @@ ModuleScreenController.add_widget(MorseCodeModuleScreen)
 
 PasswordModuleScreen = PasswordScreen(name = 'passwords')
 ModuleScreenController.add_widget(PasswordModuleScreen)
+
+SimpleModuleScreen = SimpleWiresScreen(name = 'simple wires')
+ModuleScreenController.add_widget(SimpleModuleScreen)
 
 # Prepare the navbar
 # Container for the nav bar buttons

@@ -5,9 +5,10 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.textinput import TextInput
-from kivy.graphics import Color, Rectangle
+
 
 from models.SimonSays import SimonSays
+from models.General import ColouredLabel
 
 from gameVars import gameBomb as gameBomb
 
@@ -71,16 +72,3 @@ class SimonSaysScreen(Screen):
             colourSplit = self.colourToRGB[self.outputLabelDict[outputLabel].text]
             self.outputLabelDict[outputLabel].setBackground(colourSplit[0], colourSplit[1], colourSplit[2], colourSplit[3])
         print("Strikes: {}, serialVowel: {}, Colour Map: {}".format(gameBomb.strikes, gameBomb.serialVowel, self.colourMap))
-
-class ColouredLabel(Label):
-    def setBackground(self, r, g, b, a):
-        self.canvas.before.clear()
-        with self.canvas.before:
-            Color(r, g, b, a)
-            self.rect = Rectangle(pos = self.pos, size = self.size)
-        
-        self.bind(pos = self.updateRect, size = self.updateRect)
-    
-    def updateRect(self, *args):
-        self.rect.pos = self.pos
-        self.rect.size = self.size

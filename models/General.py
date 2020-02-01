@@ -43,3 +43,18 @@ class MorseTextInput(TextInput):
             output = ""
 
         return super(MorseTextInput, self).insert_text(output, from_undo = from_undo)
+
+from kivy.uix.label import Label
+from kivy.graphics import Color, Rectangle
+class ColouredLabel(Label):
+    def setBackground(self, r, g, b, a):
+        self.canvas.before.clear()
+        with self.canvas.before:
+            Color(r, g, b, a)
+            self.rect = Rectangle(pos = self.pos, size = self.size)
+        
+        self.bind(pos = self.updateRect, size = self.updateRect)
+    
+    def updateRect(self, *args):
+        self.rect.pos = self.pos
+        self.rect.size = self.size
