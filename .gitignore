@@ -135,6 +135,8 @@ dmypy.json
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+.vs
+.vscode/
 
 ### Windows ###
 # Windows thumbnail cache files
