@@ -45,10 +45,10 @@ class MorseCodeScreen(Screen):
 
     def solveMorse(self, instance):
         morse = Morse(str(self.userMorseTxIn.text))
-        print(morse.solve())
-        possibleOutputs = str(morse.solve())
-        if possibleOutputs == '[]':
+        possibleOutputsMorse = str(morse.solve())
+        print(possibleOutputsMorse)
+        if possibleOutputsMorse == '[]':
             outputText = 'No Valid Results Found'
         else:
-            outputText = possibleOutputs
+            outputText = possibleOutputsMorse
         self.outputLabel.text = outputText

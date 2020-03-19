@@ -61,7 +61,7 @@ class Morse():
             if charsNotInWord < charsInWord:
                 possibleValues.append([word, self.wordToFreq[word]])
         
-        return possibleValues
+        return possibleValues, string
 
 # Returns a character for the given morse code
 def convertMorseToChar(morse):
